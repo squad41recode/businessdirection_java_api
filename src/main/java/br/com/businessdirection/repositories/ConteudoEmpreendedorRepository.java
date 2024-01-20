@@ -19,7 +19,7 @@ public interface ConteudoEmpreendedorRepository extends JpaRepository<ConteudoEm
 	List<ConteudoEmpreendedor> findAllAtivos(@Param("ativo") boolean ativo);
 
 	//listar todos os ativos usando jpa
-	List<ConteudoEmpreendedor> findAllConteudoEmpreendedor_Ativo(boolean ativo);
+	//List<ConteudoEmpreendedor> findAllConteudoEmpreendedor_Ativo(boolean ativo);
 
 	ConteudoEmpreendedor findByIdAndAtivo(Long id, boolean ativo);
 
