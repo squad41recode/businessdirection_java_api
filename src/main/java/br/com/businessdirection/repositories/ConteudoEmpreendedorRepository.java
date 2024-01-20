@@ -1,4 +1,4 @@
-package br.com.businessdirection.repository;
+package br.com.businessdirection.repositories;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import br.com.businessdirection.model.ConteudoEmpreendedor;
+import br.com.businessdirection.models.ConteudoEmpreendedor;
 
 public interface ConteudoEmpreendedorRepository extends JpaRepository<ConteudoEmpreendedor, Long> {
 

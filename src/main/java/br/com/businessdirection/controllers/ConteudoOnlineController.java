@@ -1,4 +1,4 @@
-package br.com.businessdirection.controller;
+package br.com.businessdirection.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.businessdirection.model.ConteudoOnline;
-import br.com.businessdirection.repository.ConteudoOnlineRepository;
-import br.com.businessdirection.repository.ModalidadeMentoriaRepository;
+import br.com.businessdirection.models.ConteudoOnline;
+import br.com.businessdirection.repositories.ConteudoOnlineRepository;
+import br.com.businessdirection.repositories.ModalidadeMentoriaRepository;
 
 @Controller
 @RequestMapping("/conteudos-online")

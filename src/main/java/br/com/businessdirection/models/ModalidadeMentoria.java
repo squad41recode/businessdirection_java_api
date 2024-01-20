@@ -1,4 +1,4 @@
-package br.com.businessdirection.model;
+package br.com.businessdirection.models;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

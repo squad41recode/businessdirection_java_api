@@ -1,4 +1,4 @@
-package br.com.businessdirection.controller;
+package br.com.businessdirection.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.businessdirection.model.EmpreendedorMentoria;
-import br.com.businessdirection.repository.EmpreendedorMentoriaRepository;
-import br.com.businessdirection.repository.EmpreendedorRepository;
-import br.com.businessdirection.repository.MentorModalidadeRepository;
+import br.com.businessdirection.models.EmpreendedorMentoria;
+import br.com.businessdirection.repositories.EmpreendedorMentoriaRepository;
+import br.com.businessdirection.repositories.EmpreendedorRepository;
+import br.com.businessdirection.repositories.MentorModalidadeRepository;
 
 @Controller
 @RequestMapping("/mentorias-adquiridas")

@@ -1,4 +1,4 @@
-package br.com.businessdirection.controller;
+package br.com.businessdirection.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.businessdirection.enums.UF;
-import br.com.businessdirection.model.Empreendedor;
-import br.com.businessdirection.repository.EmpreendedorRepository;
+import br.com.businessdirection.models.Empreendedor;
+import br.com.businessdirection.repositories.EmpreendedorRepository;
 
 @Controller
 @RequestMapping("/empreendedores")

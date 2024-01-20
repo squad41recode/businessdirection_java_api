@@ -1,4 +1,4 @@
-package br.com.businessdirection.controller;
+package br.com.businessdirection.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

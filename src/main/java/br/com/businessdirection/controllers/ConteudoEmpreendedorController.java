@@ -1,4 +1,4 @@
-package br.com.businessdirection.controller;
+package br.com.businessdirection.controllers;
 
 import java.util.List;
 
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.businessdirection.model.ConteudoEmpreendedor;
-import br.com.businessdirection.model.ConteudoOnline;
-import br.com.businessdirection.model.Empreendedor;
-import br.com.businessdirection.repository.ConteudoEmpreendedorRepository;
-import br.com.businessdirection.repository.ConteudoOnlineRepository;
-import br.com.businessdirection.repository.EmpreendedorRepository;
+import br.com.businessdirection.models.ConteudoEmpreendedor;
+import br.com.businessdirection.models.ConteudoOnline;
+import br.com.businessdirection.models.Empreendedor;
+import br.com.businessdirection.repositories.ConteudoEmpreendedorRepository;
+import br.com.businessdirection.repositories.ConteudoOnlineRepository;
+import br.com.businessdirection.repositories.EmpreendedorRepository;
 
 @Controller
 @RequestMapping("/conteudo-estudado")

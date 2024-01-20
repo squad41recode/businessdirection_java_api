@@ -1,4 +1,4 @@
-package br.com.businessdirection.model;
+package br.com.businessdirection.models;
 
 import java.sql.Date;
 
