@@ -1,9 +1,13 @@
 package br.com.businessdirection.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,23 +22,34 @@ public class Mentor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true)
 	private Long id;
 
+	@Column(nullable = false, length = 50)
 	private String nome;
+
+	@Column(nullable = false, length = 100)
 	private String sobrenome;
-	private String whatsapp;
+
+	@Column(nullable = false, length = 80, unique = true)
 	private String email;
+
+	@Column(name = "tipo_experiencia", nullable = false)
 	private String tipoExperiencia;
-	private Date dataNascimento;
+
+	@Column(nullable = false, length = 15)
+	private String whatsapp;
+
+	@Column(name = "data_nascimento", nullable = false)
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataNascimento;
 	
-    public String getNomeCompleto() {
-        return nome + " " + sobrenome;
-    }
+	@OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<MentorModalidade> mentoriasDisponiveis;
 
-	//@OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @OneToMany(mappedBy = "mentor",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MentorModalidade> mentoriasDisponiveis;
-
+	public String getNomeCompleto() {
+		return nome + " " + sobrenome;
+	}
 
 	public Long getId() {
 		return id;
@@ -84,11 +99,11 @@ public class Mentor {
 		this.tipoExperiencia = tipoExperiencia;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -106,5 +121,5 @@ public class Mentor {
 				+ ", email=" + email + ", tipoExperiencia=" + tipoExperiencia + ", dataNascimento=" + dataNascimento
 				+ "]";
 	}
-	
+
 }
