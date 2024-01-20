@@ -2,6 +2,7 @@ package br.com.businessdirection.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -43,7 +44,7 @@ public class Mentor {
 	@Column(name = "data_nascimento", nullable = false)
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataNascimento;
-	
+
 	@OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<MentorModalidade> mentoriasDisponiveis;
 
@@ -113,6 +114,27 @@ public class Mentor {
 
 	public void setMentoriasDisponiveis(List<MentorModalidade> mentoriasDisponiveis) {
 		this.mentoriasDisponiveis = mentoriasDisponiveis;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dataNascimento, email, id, mentoriasDisponiveis, nome, sobrenome, tipoExperiencia,
+				whatsapp);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mentor other = (Mentor) obj;
+		return Objects.equals(dataNascimento, other.dataNascimento) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(mentoriasDisponiveis, other.mentoriasDisponiveis)
+				&& Objects.equals(nome, other.nome) && Objects.equals(sobrenome, other.sobrenome)
+				&& Objects.equals(tipoExperiencia, other.tipoExperiencia) && Objects.equals(whatsapp, other.whatsapp);
 	}
 
 	@Override
