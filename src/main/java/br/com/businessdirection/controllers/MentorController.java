@@ -1,71 +1,63 @@
 package br.com.businessdirection.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.businessdirection.models.Mentor;
-import br.com.businessdirection.repositories.MentorRepository;
+import br.com.businessdirection.services.MentorService;
 
-@Controller
+@RestController
 @RequestMapping("/mentores")
+@Validated
 public class MentorController {
 
 	@Autowired
-	private MentorRepository mentorRepository;
-	
-	
+	private MentorService service;
 
 	@GetMapping
-	public ModelAndView home() {
-		ModelAndView modelAndView = new ModelAndView("crudMentor/index");
-		modelAndView.addObject("Mentores", mentorRepository.findAll());
+	public ResponseEntity<List<Mentor>> findAll() {
+		List<Mentor> mentores = service.findAll();
 
-		return modelAndView;
+		return ResponseEntity.ok().body(mentores);
 	}
 
-	//TERMINAR TODOS OS RELACIOMENTOS DA CLASSE MENTOR
 	@GetMapping("/{id}")
-	public ModelAndView detalhes(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudMentor/detalhes");
-		modelAndView.addObject("mentor", mentorRepository.getReferenceById(id));
+	public ResponseEntity<Mentor> findById(@PathVariable Long id) {
+		Mentor mentor = service.findById(id);
 
-		return modelAndView;
+		return ResponseEntity.ok().body(mentor);
 	}
 
-	@GetMapping("/cadastrar")
-	public ModelAndView cadastrar() {
-		ModelAndView modelAndView = new ModelAndView("crudMentor/formulario");
-		modelAndView.addObject("mentor", new Mentor());
+	@PostMapping
+	public ResponseEntity<Mentor> save(@RequestBody Mentor mentor) {
+		Mentor obj = service.save(mentor);
 
-		return modelAndView;
+		return ResponseEntity.ok().body(obj);
 	}
 
-	@GetMapping("/editar/{id}")
-	public ModelAndView editar(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudMentor/formulario");
-		modelAndView.addObject("mentor", mentorRepository.getReferenceById(id));
+	@PutMapping("/editar/{id}")
+	public ResponseEntity<Mentor> update(@RequestBody Mentor mentor) {
+		Mentor obj = service.update(mentor);
 
-		return modelAndView;
+		return ResponseEntity.ok().body(obj);
 	}
 
-	@PostMapping({ "/cadastrar", "/editar/{id}" })
-	public String salvar(Mentor mentor) {
-		mentor.setMentoriasDisponiveis(null);
-		mentorRepository.save(mentor);
+	@DeleteMapping("/excluir/{id}")
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		service.delete(id);
 
-		return "redirect:/mentores";
-	}
-
-	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
-		mentorRepository.deleteById(id);
-
-		return "redirect:/mentores";
+		return ResponseEntity.noContent().build();
 	}
 
 }
