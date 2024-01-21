@@ -1,5 +1,7 @@
 package br.com.businessdirection.models;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,7 +18,7 @@ public class MentorModalidade {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+	@Column(unique = true)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -102,6 +104,25 @@ public class MentorModalidade {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(ativo, diaSemana, horario, id, mentor, modalidadeMentoria);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MentorModalidade other = (MentorModalidade) obj;
+		return ativo == other.ativo && Objects.equals(diaSemana, other.diaSemana)
+				&& Objects.equals(horario, other.horario) && Objects.equals(id, other.id)
+				&& Objects.equals(mentor, other.mentor) && Objects.equals(modalidadeMentoria, other.modalidadeMentoria);
 	}
 
 	@Override
