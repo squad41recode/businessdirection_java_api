@@ -7,6 +7,9 @@ import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,6 +48,8 @@ public class Mentor {
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataNascimento;
 
+	// @JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<MentorModalidade> mentoriasDisponiveis;
 
