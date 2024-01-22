@@ -24,11 +24,11 @@ public class EmpreendedorService {
 	}
 
 	public List<Empreendedor> findAll() {
-		Empreendedor empreendedor;
-		//empreendedor.getMentoriasAdquiridas();
-		//repo.findAllConteudosEstudados();
-		//repo.
-		
+		// Empreendedor empreendedor;
+		// empreendedor.getMentoriasAdquiridas();
+		// repo.findAllConteudosEstudados();
+		// repo.
+
 		return repo.findAll();
 	}
 

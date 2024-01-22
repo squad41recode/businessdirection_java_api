@@ -46,7 +46,7 @@ public class MentorModalidadeService {
 		mentorModalidade.setMentor(mentor);
 		mentorModalidade.setModalidadeMentoria(modalidadeMentoria);
 		this.mentorModalidadeRepo.save(mentorModalidade);
-		
+
 		return mentorModalidade;
 	}
 

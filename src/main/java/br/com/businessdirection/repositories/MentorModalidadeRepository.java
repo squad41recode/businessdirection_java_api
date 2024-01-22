@@ -11,6 +11,7 @@ import br.com.businessdirection.models.MentorModalidade;
 
 public interface MentorModalidadeRepository extends JpaRepository<MentorModalidade, Long> {
 
+	@Override
 	@EntityGraph(attributePaths = { "mentor", "modalidadeMentoria" })
 	List<MentorModalidade> findAll();
 
@@ -22,6 +23,7 @@ public interface MentorModalidadeRepository extends JpaRepository<MentorModalida
 
 	MentorModalidade findByIdAndAtivo(Long id, boolean ativo);
 
+	@Override
 	@EntityGraph(attributePaths = { "mentor", "modalidadeMentoria" })
 	Optional<MentorModalidade> findById(Long id);
 }

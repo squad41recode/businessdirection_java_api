@@ -13,7 +13,7 @@ public class DirecionamentoPaginasController {
 
 		return modelAndView;
 	}
-	
+
 
 	@GetMapping("/ferramentas")
 	public ModelAndView ferramentas() {
@@ -21,7 +21,7 @@ public class DirecionamentoPaginasController {
 
 		return modelAndView;
 	}
-	
+
 
 	@GetMapping("/admin")
 	public ModelAndView admin() {
@@ -29,28 +29,28 @@ public class DirecionamentoPaginasController {
 
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/sobre")
 	public ModelAndView sobre() {
 		ModelAndView modelAndView = new ModelAndView("/pages/sobre.html");
 
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/contato")
 	public ModelAndView contato() {
 		ModelAndView modelAndView = new ModelAndView("/pages/contato.html");
 
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/entrar")
 	public ModelAndView entrar() {
 		ModelAndView modelAndView = new ModelAndView("/pages/entrar.html");
 
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/cadastrar")
 	public ModelAndView cadastrar() {
 		ModelAndView modelAndView = new ModelAndView("/pages/cadastrar.html");
@@ -58,12 +58,12 @@ public class DirecionamentoPaginasController {
 		return modelAndView;
 	}
 }
-		
-		
-		
-		
-		
-		
-		
-	
+
+
+
+
+
+
+
+
 

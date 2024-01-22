@@ -4,12 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 //import jakarta.persistence.Access;
 import jakarta.persistence.CascadeType;
@@ -60,13 +56,13 @@ public class Empreendedor {
 	}
 
 	// @JsonIgnore
-	@JsonProperty(access = Access.WRITE_ONLY)
+	// @JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "empreendedor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@BatchSize(size = 10)
+	// @BatchSize(size = 10)
 	private List<EmpreendedorMentoria> mentoriasAdquiridas;
 
 	// @JsonIgnore
-	@JsonProperty(access = Access.WRITE_ONLY)
+	// @JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "empreendedor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
 	private List<ConteudoEmpreendedor> conteudosEstudados;
@@ -189,9 +185,7 @@ public class Empreendedor {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		Empreendedor other = (Empreendedor) obj;
 		return Objects.equals(CEP, other.CEP) && Objects.equals(bairro, other.bairro)

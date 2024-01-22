@@ -41,7 +41,7 @@ public class ConteudoOnlineController {
 	public ResponseEntity<Void> create(@RequestBody ConteudoOnline conteudoOnline) {
 		// List<ModalidadeMentoria> modalidades = modalidadeMentoriaService.findAll();
 		// conteudoOnline.setModalidadeMentoria(modalidades);
-		conteudoOnlineService.create(conteudoOnline, 
+		conteudoOnlineService.create(conteudoOnline,
 				conteudoOnline.getModalidadeMentoria().getId());
 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(conteudoOnline.getId())

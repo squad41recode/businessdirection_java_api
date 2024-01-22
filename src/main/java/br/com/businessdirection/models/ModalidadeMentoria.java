@@ -38,7 +38,7 @@ public class ModalidadeMentoria {
 	public ModalidadeMentoria() {
 		super();
 	}
-	
+
 	public ModalidadeMentoria(Long id, String nomeModalidade, ConteudoOnline conteudoOnline) {
 		super();
 		this.id = id;
@@ -79,9 +79,7 @@ public class ModalidadeMentoria {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		ModalidadeMentoria other = (ModalidadeMentoria) obj;
 		return Objects.equals(conteudoOnline, other.conteudoOnline) && Objects.equals(id, other.id)

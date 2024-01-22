@@ -9,6 +9,7 @@ import br.com.businessdirection.models.Mentor;
 
 public interface MentorRepository extends JpaRepository<Mentor, Long> {
 
+	@Override
 	@EntityGraph(attributePaths = { "mentoriasDisponiveis" })
 	List<Mentor> findAll();
 }

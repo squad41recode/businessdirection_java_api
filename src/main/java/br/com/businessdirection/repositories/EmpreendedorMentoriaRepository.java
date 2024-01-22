@@ -10,6 +10,7 @@ import br.com.businessdirection.models.EmpreendedorMentoria;
 
 public interface EmpreendedorMentoriaRepository extends JpaRepository<EmpreendedorMentoria, Long> {
 
+	@Override
 	@EntityGraph(attributePaths = { "mentorModalidade", "empreendedor" })
 	List<EmpreendedorMentoria> findAll();
 

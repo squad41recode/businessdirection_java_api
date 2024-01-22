@@ -31,12 +31,12 @@ public class ConteudoOnline {
 	private ModalidadeMentoria modalidadeMentoria;
 
 	private String conteudo;
-	
+
     @JsonIgnore
     //private List<ModalidadeMentoria> modalidades;
 	@OneToMany(mappedBy = "conteudoOnline",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ConteudoEmpreendedor> conteudosEmpreendedor;
-	
+
 
 	public ConteudoOnline() {
 		super();
@@ -103,9 +103,7 @@ public class ConteudoOnline {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		ConteudoOnline other = (ConteudoOnline) obj;
 		return Objects.equals(conteudo, other.conteudo)

@@ -41,7 +41,7 @@ public class MentorModalidadeController {
 	public ResponseEntity<Void> create(@RequestBody MentorModalidade mentorModalidade) {
 		// List<ModalidadeMentoria> modalidades = modalidadeMentoriaService.findAll();
 		// mentorModalidade.setModalidadeMentoria(modalidades);
-		mentorModalidadeService.create(mentorModalidade, 
+		mentorModalidadeService.create(mentorModalidade,
 				mentorModalidade.getMentor().getId(),
 				mentorModalidade.getModalidadeMentoria().getId());
 

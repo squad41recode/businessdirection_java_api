@@ -11,6 +11,7 @@ import br.com.businessdirection.models.ConteudoEmpreendedor;
 
 public interface ConteudoEmpreendedorRepository extends JpaRepository<ConteudoEmpreendedor, Long> {
 
+	@Override
 	@EntityGraph(attributePaths = { "conteudoOnline", "empreendedor" })
 	List<ConteudoEmpreendedor> findAll();
 

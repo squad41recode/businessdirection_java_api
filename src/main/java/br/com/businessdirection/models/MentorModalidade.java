@@ -105,7 +105,7 @@ public class MentorModalidade {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(ativo, diaSemana, horario, id, mentor, modalidadeMentoria);
@@ -115,9 +115,7 @@ public class MentorModalidade {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		MentorModalidade other = (MentorModalidade) obj;
 		return ativo == other.ativo && Objects.equals(diaSemana, other.diaSemana)
