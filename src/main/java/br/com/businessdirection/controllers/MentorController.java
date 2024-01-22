@@ -18,7 +18,7 @@ import br.com.businessdirection.models.Mentor;
 import br.com.businessdirection.services.MentorService;
 
 @RestController
-@RequestMapping("/mentores")
+@RequestMapping("/api/mentores")
 @Validated
 public class MentorController {
 
@@ -46,14 +46,14 @@ public class MentorController {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PutMapping("/editar/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Mentor> update(@RequestBody Mentor mentor) {
 		Mentor obj = service.update(mentor);
 
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@DeleteMapping("/excluir/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.delete(id);
 
