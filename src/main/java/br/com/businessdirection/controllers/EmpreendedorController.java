@@ -1,70 +1,68 @@
 package br.com.businessdirection.controllers;
 
+import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.businessdirection.enums.UF;
 import br.com.businessdirection.models.Empreendedor;
-import br.com.businessdirection.repositories.EmpreendedorRepository;
+import br.com.businessdirection.services.EmpreendedorService;
 
-@Controller
-@RequestMapping("/empreendedores")
+@RestController
+@RequestMapping("/api/empreendedores")
+@Validated
 public class EmpreendedorController {
 
 	@Autowired
-	private EmpreendedorRepository empreendedorRepository;
+	private EmpreendedorService empreendedorService;
 
 	@GetMapping
-	public ModelAndView home() {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedor/index");
-		modelAndView.addObject("Empreendedores", empreendedorRepository.findAll());
+	public ResponseEntity<List<Empreendedor>> findAll() {
+		List<Empreendedor> empreendedores = empreendedorService.findAll();
 
-		return modelAndView;
+		return ResponseEntity.ok().body(empreendedores);
 	}
 
 	@GetMapping("/{id}")
-	public ModelAndView detalhes(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedor/detalhes");
-		modelAndView.addObject("empreendedor", empreendedorRepository.getReferenceById(id));
+	public ResponseEntity<Empreendedor> findById(@PathVariable Long id) {
+		Empreendedor empreendedor = empreendedorService.findById(id);
 
-		return modelAndView;
+		return ResponseEntity.ok().body(empreendedor);
 	}
 
-	@GetMapping("/cadastrar")
-	public ModelAndView cadastrar() {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedor/formulario");
-		modelAndView.addObject("empreendedor", new Empreendedor());
-		modelAndView.addObject("estados", UF.values());
-
-		return modelAndView;
+	@PostMapping
+	public ResponseEntity<Void> create(@RequestBody Empreendedor empreendedor) {
+		// UF estados = UF.values();
+		this.empreendedorService.save(empreendedor);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(empreendedor.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping("/editar/{id}")
-	public ModelAndView editar(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedor/formulario");
-		modelAndView.addObject("empreendedor", empreendedorRepository.getReferenceById(id));
-		modelAndView.addObject("estados", UF.values());
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@RequestBody Empreendedor empreendedor, @PathVariable Long id) {
+		empreendedor.setId(id);
+		this.empreendedorService.update(empreendedor);
 
-		return modelAndView;
+		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping({ "/cadastrar", "/editar/{id}" })
-	public String salvar(Empreendedor empreendedor) {
-		empreendedorRepository.save(empreendedor);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		empreendedorService.delete(id);
 
-		return "redirect:/empreendedores";
-	}
-
-	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
-		empreendedorRepository.deleteById(id);
-
-		return "redirect:/empreendedores";
+		return ResponseEntity.noContent().build();
 	}
 
 }
