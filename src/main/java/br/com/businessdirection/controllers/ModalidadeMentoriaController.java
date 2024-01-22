@@ -19,7 +19,7 @@ import br.com.businessdirection.models.ModalidadeMentoria;
 import br.com.businessdirection.services.ModalidadeMentoriaService;
 
 @Controller
-@RequestMapping("/modalidades-mentorias")
+@RequestMapping("/api/modalidades-mentorias")
 public class ModalidadeMentoriaController {
 
 	@Autowired
@@ -48,7 +48,7 @@ public class ModalidadeMentoriaController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PutMapping("/editar/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@RequestBody ModalidadeMentoria modalidadeMentoria, @PathVariable Long id) {
 		modalidadeMentoria.setId(id);
 		this.service.update(modalidadeMentoria);
@@ -56,7 +56,7 @@ public class ModalidadeMentoriaController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@DeleteMapping("/excluir/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		service.delete(id);
 
