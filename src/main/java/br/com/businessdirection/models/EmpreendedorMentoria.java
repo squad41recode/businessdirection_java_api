@@ -2,6 +2,9 @@ package br.com.businessdirection.models;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,11 +26,13 @@ public class EmpreendedorMentoria {
 	private Long id;
 
 	// cascade = CascadeType.ALL,
-	@OneToOne(fetch = FetchType.LAZY)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_MentorModalidade_id", nullable = false)
 	private MentorModalidade mentorModalidade;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_Empreendedor_id", nullable = false)
 	private Empreendedor empreendedor;
 
