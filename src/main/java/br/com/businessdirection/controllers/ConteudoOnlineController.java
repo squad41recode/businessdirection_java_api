@@ -1,72 +1,65 @@
 package br.com.businessdirection.controllers;
 
+import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.businessdirection.models.ConteudoOnline;
-import br.com.businessdirection.repositories.ConteudoOnlineRepository;
-import br.com.businessdirection.repositories.ModalidadeMentoriaRepository;
+import br.com.businessdirection.services.ConteudoOnlineService;
 
-@Controller
-@RequestMapping("/conteudos-online")
+@RestController
+@RequestMapping("/api/conteudos-online")
 public class ConteudoOnlineController {
 
 	@Autowired
-	private ConteudoOnlineRepository conteudoOnlineRepository;
-
-	@Autowired
-	private ModalidadeMentoriaRepository modalidadeMonitoriaRepository;
+	private ConteudoOnlineService conteudoOnlineService;
 
 	@GetMapping
-	public ModelAndView home() {
-		ModelAndView modelAndView = new ModelAndView("crudConteudoOnline/index");
-		modelAndView.addObject("ConteudosOnline", conteudoOnlineRepository.findAll());
-
-		return modelAndView;
+	public ResponseEntity<List<ConteudoOnline>> findAll() {
+		List<ConteudoOnline> conteudosOnline = conteudoOnlineService.findAll();
+		return ResponseEntity.ok().body(conteudosOnline);
 	}
 
-	// TERMINAR TODOS OS RELACIOMENTOS DA CLASSE EMPREENDEDOR
 	@GetMapping("/{id}")
-	public ModelAndView detalhes(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudConteudoOnline/detalhes");
-		modelAndView.addObject("ConteudoOnline", conteudoOnlineRepository.getReferenceById(id));
-
-		return modelAndView;
+	public ResponseEntity<ConteudoOnline> findById(@PathVariable Long id) {
+		ConteudoOnline conteudoOnline = conteudoOnlineService.findById(id);
+		return ResponseEntity.ok().body(conteudoOnline);
 	}
 
-	@GetMapping("/cadastrar")
-	public ModelAndView cadastrar() {
-		ModelAndView modelAndView = new ModelAndView("crudConteudoOnline/formulario");
-		modelAndView.addObject("conteudoOnline", new ConteudoOnline());
-		modelAndView.addObject("modalidades", modalidadeMonitoriaRepository.findAll());
+	@PostMapping
+	public ResponseEntity<Void> create(@RequestBody ConteudoOnline conteudoOnline) {
+		// List<ModalidadeMentoria> modalidades = modalidadeMentoriaService.findAll();
+		// conteudoOnline.setModalidadeMentoria(modalidades);
+		conteudoOnlineService.create(conteudoOnline, 
+				conteudoOnline.getModalidadeMentoria().getId());
 
-		return modelAndView;
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(conteudoOnline.getId())
+				.toUri();
+
+		return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping("/editar/{id}")
-	public ModelAndView editar(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudConteudoOnline/formulario");
-		modelAndView.addObject("conteudoOnline", conteudoOnlineRepository.getReferenceById(id));
-
-		return modelAndView;
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@RequestBody ConteudoOnline conteudoOnline, @PathVariable Long id) {
+		conteudoOnline.setId(id);
+		conteudoOnlineService.update(conteudoOnline);
+		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping({ "/cadastrar", "/editar/{id}" })
-	public String salvar(ConteudoOnline conteudoOnline) {
-		conteudoOnlineRepository.save(conteudoOnline);
-
-		return "redirect:/conteudos-online";
-	}
-
-	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
-		conteudoOnlineRepository.deleteById(id);
-
-		return "redirect:/conteudos-online";
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		conteudoOnlineService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
