@@ -1,6 +1,7 @@
 package br.com.businessdirection.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,9 @@ public interface ConteudoOnlineRepository extends JpaRepository<ConteudoOnline, 
 
 	@EntityGraph(attributePaths = { "modalidadeMentoria" })
 	List<ConteudoOnline> findAll();
+
+	// @Query("SELECT co FROM ConteudoOnline co WHERE co.id = :id")
+	@EntityGraph(attributePaths = { "modalidadeMentoria" })
+	Optional<ConteudoOnline> findById(Long id);
+
 }
