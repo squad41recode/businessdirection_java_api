@@ -2,6 +2,8 @@ package br.com.businessdirection.models;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +26,7 @@ public class ModalidadeMentoria {
 	@Column(nullable = false, length = 80, unique = true)
 	private String nomeModalidade;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "modalidadeMentoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private ConteudoOnline conteudoOnline;
 
