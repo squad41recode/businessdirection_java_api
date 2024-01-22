@@ -2,6 +2,9 @@ package br.com.businessdirection.models;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,7 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,11 +23,13 @@ public class ConteudoEmpreendedor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_ConteudoOnline_id", nullable = false)
 	private ConteudoOnline conteudoOnline;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_empreendedor_id", nullable = false)
 	private Empreendedor empreendedor;
 
