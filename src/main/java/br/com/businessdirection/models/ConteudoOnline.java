@@ -3,6 +3,8 @@ package br.com.businessdirection.models;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +32,8 @@ public class ConteudoOnline {
 
 	private String conteudo;
 	
+    @JsonIgnore
+    //private List<ModalidadeMentoria> modalidades;
 	@OneToMany(mappedBy = "conteudoOnline",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ConteudoEmpreendedor> conteudosEmpreendedor;
 	
