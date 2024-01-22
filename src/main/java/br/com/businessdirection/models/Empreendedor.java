@@ -1,9 +1,19 @@
 package br.com.businessdirection.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
+import org.hibernate.annotations.BatchSize;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+//import jakarta.persistence.Access;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,14 +28,28 @@ public class Empreendedor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true)
 	private Long id;
 
+	@Column(nullable = false, length = 50)
 	private String nome;
+
+	@Column(nullable = false, length = 100)
 	private String sobrenome;
-	private Date dataNascimento;
-	private String telefone;
+
+	@Column(nullable = false, length = 80, unique = true)
 	private String email;
+
+	@Column(nullable = false, length = 15)
+	private String telefone;
+
+	@Column(name = "data_nascimento", nullable = false)
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataNascimento;
+
+	@Column(nullable = false, length = 80)
 	private String nomeEmpresa;
+
 	private String cidade;
 	private String estado;
 	private String bairro;
@@ -35,11 +59,16 @@ public class Empreendedor {
 		return nome + " " + sobrenome;
 	}
 
-	@OneToMany(mappedBy = "empreendedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // (fetch =
-																								// FetchType.EAGER)
+	// @JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "empreendedor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@BatchSize(size = 10)
 	private List<EmpreendedorMentoria> mentoriasAdquiridas;
 
-	@OneToMany(mappedBy = "empreendedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// @JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "empreendedor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
 	private List<ConteudoEmpreendedor> conteudosEstudados;
 
 	public List<ConteudoEmpreendedor> getConteudosEmpreendedor() {
@@ -78,11 +107,11 @@ public class Empreendedor {
 		this.sobrenome = sobrenome;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -148,6 +177,30 @@ public class Empreendedor {
 
 	public void setMentoriasAdquiridas(List<EmpreendedorMentoria> mentoriasAdquiridas) {
 		this.mentoriasAdquiridas = mentoriasAdquiridas;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(CEP, bairro, cidade, conteudosEstudados, dataNascimento, email, estado, id,
+				mentoriasAdquiridas, nome, nomeEmpresa, sobrenome, telefone);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Empreendedor other = (Empreendedor) obj;
+		return Objects.equals(CEP, other.CEP) && Objects.equals(bairro, other.bairro)
+				&& Objects.equals(cidade, other.cidade) && Objects.equals(conteudosEstudados, other.conteudosEstudados)
+				&& Objects.equals(dataNascimento, other.dataNascimento) && Objects.equals(email, other.email)
+				&& Objects.equals(estado, other.estado) && Objects.equals(id, other.id)
+				&& Objects.equals(mentoriasAdquiridas, other.mentoriasAdquiridas) && Objects.equals(nome, other.nome)
+				&& Objects.equals(nomeEmpresa, other.nomeEmpresa) && Objects.equals(sobrenome, other.sobrenome)
+				&& Objects.equals(telefone, other.telefone);
 	}
 
 	@Override
