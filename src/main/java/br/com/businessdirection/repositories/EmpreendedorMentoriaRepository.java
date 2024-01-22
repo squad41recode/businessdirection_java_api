@@ -17,5 +17,9 @@ public interface EmpreendedorMentoriaRepository extends JpaRepository<Empreended
 	List<EmpreendedorMentoria> findAllAtivos();
 
 	EmpreendedorMentoria findByIdAndAtivo(Long id, boolean ativo);
+	/*
+	 * @EntityGraph(attributePaths = { "mentorModalidade", "empreendedor" })
+	 * Optional<EmpreendedorMentoria> findById(Long id);
+	 */
 
 }
