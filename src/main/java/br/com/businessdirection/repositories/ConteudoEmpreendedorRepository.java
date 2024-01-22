@@ -14,12 +14,14 @@ public interface ConteudoEmpreendedorRepository extends JpaRepository<ConteudoEm
 	@EntityGraph(attributePaths = { "conteudoOnline", "empreendedor" })
 	List<ConteudoEmpreendedor> findAll();
 
+	List<ConteudoEmpreendedor> findAllByEmpreendedor_Id(Long id);
+
 	// listar todos os ativos usando query
 	@Query("SELECT ce FROM ConteudoEmpreendedor ce WHERE ce.ativo = :ativo")
 	List<ConteudoEmpreendedor> findAllAtivos(@Param("ativo") boolean ativo);
 
-	//listar todos os ativos usando jpa
-	//List<ConteudoEmpreendedor> findAllConteudoEmpreendedor_Ativo(boolean ativo);
+	// listar todos os ativos usando jpa
+	// List<ConteudoEmpreendedor> findAllConteudoEmpreendedor_Ativo(boolean ativo);
 
 	ConteudoEmpreendedor findByIdAndAtivo(Long id, boolean ativo);
 
