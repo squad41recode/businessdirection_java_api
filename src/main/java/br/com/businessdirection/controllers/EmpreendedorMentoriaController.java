@@ -1,97 +1,63 @@
 package br.com.businessdirection.controllers;
 
+import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.businessdirection.models.EmpreendedorMentoria;
-import br.com.businessdirection.repositories.EmpreendedorMentoriaRepository;
-import br.com.businessdirection.repositories.EmpreendedorRepository;
-import br.com.businessdirection.repositories.MentorModalidadeRepository;
+import br.com.businessdirection.services.EmpreendedorMentoriaService;
 
 @Controller
-@RequestMapping("/mentorias-adquiridas")
+@RequestMapping("/api/mentorias-adquiridas")
 public class EmpreendedorMentoriaController {
 
 	@Autowired
-	private EmpreendedorMentoriaRepository empreendedorMentoriaRepository;
-
-	@Autowired
-	private MentorModalidadeRepository mentorModalidadeRepository;
-
-	@Autowired
-	private EmpreendedorRepository empreendedorRepository;
+	private EmpreendedorMentoriaService empreendedorMentoriaService;
 
 	@GetMapping
-	public ModelAndView home() {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedorMentoria/index");
-		modelAndView.addObject("EmpreendedorMentorias", empreendedorMentoriaRepository.findAll());
-
-		return modelAndView;
+	public ResponseEntity<List<EmpreendedorMentoria>> findAll() {
+		List<EmpreendedorMentoria> conteudosOnline = empreendedorMentoriaService.findAll();
+		return ResponseEntity.ok().body(conteudosOnline);
 	}
 
 	@GetMapping("/{id}")
-	public ModelAndView detalhes(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedorMentoria/detalhes");
-		modelAndView.addObject("empreendedorMentoria", empreendedorMentoriaRepository.findById(id));
-
-		return modelAndView;
+	public ResponseEntity<EmpreendedorMentoria> findById(@PathVariable Long id) {
+		EmpreendedorMentoria empreendedorMentoria = empreendedorMentoriaService.findById(id);
+		return ResponseEntity.ok().body(empreendedorMentoria);
 	}
 
-	@GetMapping("/cadastrar")
-	public ModelAndView cadastrar() {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedorMentoria/formulario");
-		modelAndView.addObject("empreendedorMentoria", new EmpreendedorMentoria());
-		modelAndView.addObject("mentoriasDisponiveis",
-				mentorModalidadeRepository.listarMentoriasSemLigacaoComEmpreendedor());
-		modelAndView.addObject("empreendedores", empreendedorRepository.findAll());
+	@PostMapping
+	public ResponseEntity<Void> create(@RequestBody EmpreendedorMentoria empreendedorMentoria) {
+		empreendedorMentoriaService.create(empreendedorMentoria, empreendedorMentoria.getEmpreendedor().getId(),
+				empreendedorMentoria.getMentorModalidade().getId());
 
-		return modelAndView;
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(empreendedorMentoria.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping("/editar/{id}")
-	public ModelAndView editar(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("crudEmpreendedorMentoria/formulario");
-		modelAndView.addObject("empreendedorMentoria", empreendedorMentoriaRepository.getReferenceById(id));
-		modelAndView.addObject("mentoriasDisponiveis",
-				mentorModalidadeRepository.listarMentoriasSemLigacaoComEmpreendedor());
-		modelAndView.addObject("empreendedores", empreendedorRepository.findAll());
-
-		return modelAndView;
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@RequestBody EmpreendedorMentoria empreendedorMentoria, @PathVariable Long id) {
+		empreendedorMentoria.setId(id);
+		empreendedorMentoriaService.update(empreendedorMentoria);
+		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping({ "/cadastrar", "/editar/{id}" })
-	public String salvar(EmpreendedorMentoria empreendedorMentoria, RedirectAttributes redirectAttributes) {
-		try {
-			empreendedorMentoriaRepository.save(empreendedorMentoria);
-		} catch (DataIntegrityViolationException e) {
-
-			redirectAttributes.addFlashAttribute("alertMessage",
-					"Mentoria indisponível para o empreendedor selecionado.");
-			return "redirect:/mentorias-adquiridas/cadastrar";
-
-		}
-
-		return "redirect:/mentorias-adquiridas";
-	}
-
-	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable Long id) {
-		empreendedorMentoriaRepository.deleteById(id);
-		/*
-		 * Optional<EmpreendedorMentoria> empreendedorMentoriaOptional =
-		 * empreendedorMentoriaRepository.findById(id);
-		 * empreendedorMentoriaOptional.ifPresent(empreendedorMentoria -> {
-		 * empreendedorMentoria.setAtivo(false);
-		 * empreendedorMentoriaRepository.save(empreendedorMentoria); });
-		 */
-
-		return "redirect:/mentorias-adquiridas";
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> excluir(@PathVariable Long id) {
+		empreendedorMentoriaService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
