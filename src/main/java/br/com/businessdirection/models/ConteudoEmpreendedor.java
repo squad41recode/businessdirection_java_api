@@ -1,6 +1,6 @@
 package br.com.businessdirection.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -34,8 +34,8 @@ public class ConteudoEmpreendedor {
 	private Empreendedor empreendedor;
 
 	private String status;
-	private Date dataInicio;
-	private Date dataFim;
+	private LocalDate dataInicio;
+	private LocalDate dataFim;
 
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo = true;
@@ -53,7 +53,7 @@ public class ConteudoEmpreendedor {
 	}
 
 	public ConteudoEmpreendedor(Long id, ConteudoOnline conteudoOnline, Empreendedor empreendedor, String status,
-			Date dataInicio, Date dataFim, boolean ativo) {
+			LocalDate dataInicio, LocalDate dataFim, boolean ativo) {
 		super();
 		this.id = id;
 		this.conteudoOnline = conteudoOnline;
@@ -96,19 +96,19 @@ public class ConteudoEmpreendedor {
 		this.status = status;
 	}
 
-	public Date getDataInicio() {
+	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(LocalDate dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	public Date getDataFim() {
+	public LocalDate getDataFim() {
 		return dataFim;
 	}
 
-	public void setDataFim(Date dataFim) {
+	public void setDataFim(LocalDate dataFim) {
 		this.dataFim = dataFim;
 	}
 
