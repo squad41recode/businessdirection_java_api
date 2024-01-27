@@ -32,6 +32,12 @@ public class ModalidadeMentoriaController {
 		return ResponseEntity.ok().body(modalidadeMentorias);
 	}
 
+    @GetMapping("/sem-conteudo")
+    public ResponseEntity<List<ModalidadeMentoria>> findAllWithoutConteudo() {
+        List<ModalidadeMentoria> modalidadesSemConteudo = service.findAllWithoutConteudo();
+        return ResponseEntity.ok().body(modalidadesSemConteudo);
+    }
+
 	@GetMapping("/{id}")
 	public ResponseEntity<ModalidadeMentoria> findById(@PathVariable Long id) {
 		ModalidadeMentoria modalidadeMentoria = service.findById(id);
