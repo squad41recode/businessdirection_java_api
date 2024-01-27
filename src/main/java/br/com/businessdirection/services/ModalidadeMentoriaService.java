@@ -53,4 +53,9 @@ public class ModalidadeMentoriaService {
 		newModalidadeMentoria.setNomeModalidade(oldModalidadeMentoria.getNomeModalidade());
 		newModalidadeMentoria.setConteudoOnline(oldModalidadeMentoria.getConteudoOnline());
 	}
+
+	public List<ModalidadeMentoria> findAllWithoutConteudo() {
+		List<ModalidadeMentoria> modalidadesSemConteudo = repo.listarModalidadesSemLigacaoComConteudos();
+		return modalidadesSemConteudo;
+	}
 }
