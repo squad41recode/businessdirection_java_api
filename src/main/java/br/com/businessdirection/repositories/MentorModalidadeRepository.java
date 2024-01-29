@@ -20,9 +20,14 @@ public interface MentorModalidadeRepository extends JpaRepository<MentorModalida
 
 	@Query("SELECT mm FROM MentorModalidade mm WHERE mm.ativo = true")
 	List<MentorModalidade> findAllAtivos();
+	
+	@Query("SELECT mm FROM MentorModalidade mm WHERE mm.disponivel = true")
+	List<MentorModalidade> findAllDisponiveis();
 
 	MentorModalidade findByIdAndAtivo(Long id, boolean ativo);
 
+	MentorModalidade findByIdAndDisponivel(Long id, boolean disponivel);
+	
 	@Override
 	@EntityGraph(attributePaths = { "mentor", "modalidadeMentoria" })
 	Optional<MentorModalidade> findById(Long id);

@@ -25,10 +25,16 @@ public class MentorModalidadeController {
 	@Autowired
 	private MentorModalidadeService mentorModalidadeService;
 
-	@GetMapping
+	@GetMapping("/incluir-indisponiveis")
 	public ResponseEntity<List<MentorModalidade>> findAll() {
-		List<MentorModalidade> conteudosOnline = mentorModalidadeService.findAll();
-		return ResponseEntity.ok().body(conteudosOnline);
+		List<MentorModalidade> todasMentorias = mentorModalidadeService.findAll();
+		return ResponseEntity.ok().body(todasMentorias);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<MentorModalidade>> findAllDisponiveis() {
+		List<MentorModalidade> mentoriasDisponiveis = mentorModalidadeService.findAllDisponiveis();
+		return ResponseEntity.ok().body(mentoriasDisponiveis);
 	}
 
 	@GetMapping("/{id}")

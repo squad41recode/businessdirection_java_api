@@ -37,6 +37,10 @@ public class MentorModalidadeService {
 		return mentorModalidadeRepo.findAll();
 	}
 
+	public List<MentorModalidade> findAllDisponiveis() {
+		return mentorModalidadeRepo.findAllDisponiveis();
+	}
+
 	@Transactional
 	public MentorModalidade create(MentorModalidade mentorModalidade, Long mentorId, Long modalidadeMentoriaId) {
 

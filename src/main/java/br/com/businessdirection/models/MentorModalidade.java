@@ -21,11 +21,11 @@ public class MentorModalidade {
 	@Column(unique = true)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_Mentor_id", nullable = false)
 	private Mentor mentor;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_ModalidadeMentoria_id", nullable = false)
 	private ModalidadeMentoria modalidadeMentoria;
 
@@ -33,30 +33,11 @@ public class MentorModalidade {
 
 	private String horario;
 
+	@Column(name = "disponivel", nullable = false)
+	private boolean disponivel = true; 
+
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo = true; // ativo por padrao
-
-	public MentorModalidade(Long id, Mentor mentor, ModalidadeMentoria modalidadeMentoria, String diaSemana,
-			String horario, boolean ativo) {
-		super();
-		this.id = id;
-		this.mentor = mentor;
-		this.modalidadeMentoria = modalidadeMentoria;
-		this.diaSemana = diaSemana;
-		this.horario = horario;
-		this.ativo = ativo;
-	}
-
-	public MentorModalidade(Mentor mentor, ModalidadeMentoria modalidadeMentoria, String diaSemana, String horario) {
-		super();
-		this.mentor = mentor;
-		this.modalidadeMentoria = modalidadeMentoria;
-		this.diaSemana = diaSemana;
-		this.horario = horario;
-	}
-
-	public MentorModalidade() {
-	}
 
 	public Long getId() {
 		return id;
@@ -98,6 +79,14 @@ public class MentorModalidade {
 		this.horario = horario;
 	}
 
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
+	}
+
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -106,27 +95,40 @@ public class MentorModalidade {
 		this.ativo = ativo;
 	}
 
+	public MentorModalidade() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public MentorModalidade(Long id, Mentor mentor, ModalidadeMentoria modalidadeMentoria, String diaSemana,
+			String horario, boolean disponivel, boolean ativo) {
+		super();
+		this.id = id;
+		this.mentor = mentor;
+		this.modalidadeMentoria = modalidadeMentoria;
+		this.diaSemana = diaSemana;
+		this.horario = horario;
+		this.disponivel = disponivel;
+		this.ativo = ativo;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(ativo, diaSemana, horario, id, mentor, modalidadeMentoria);
+		return Objects.hash(ativo, diaSemana, disponivel, horario, id, mentor, modalidadeMentoria);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if ((obj == null) || (getClass() != obj.getClass()))
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
 			return false;
 		MentorModalidade other = (MentorModalidade) obj;
-		return ativo == other.ativo && Objects.equals(diaSemana, other.diaSemana)
+		return ativo == other.ativo && Objects.equals(diaSemana, other.diaSemana) && disponivel == other.disponivel
 				&& Objects.equals(horario, other.horario) && Objects.equals(id, other.id)
 				&& Objects.equals(mentor, other.mentor) && Objects.equals(modalidadeMentoria, other.modalidadeMentoria);
-	}
-
-	@Override
-	public String toString() {
-		return "MentorModalidade [id=" + id + ", mentor=" + mentor + ", modalidadeMentoria=" + modalidadeMentoria
-				+ ", diaSemana=" + diaSemana + ", horario=" + horario + "]";
 	}
 
 }
