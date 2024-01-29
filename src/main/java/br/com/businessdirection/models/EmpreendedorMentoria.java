@@ -22,7 +22,6 @@ public class EmpreendedorMentoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long id;
 
 	// cascade = CascadeType.ALL,
